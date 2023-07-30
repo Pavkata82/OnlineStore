@@ -14,14 +14,18 @@ namespace OnlineStore.Classes
 
         public string logo = "   ____        ___               _____ __                \r\n  / __ \\____  / (_)___  ___     / ___// /_____  ________ \r\n / / / / __ \\/ / / __ \\/ _ \\    \\__ \\/ __/ __ \\/ ___/ _ \\\r\n/ /_/ / / / / / / / / /  __/   ___/ / /_/ /_/ / /  /  __/\r\n\\____/_/ /_/_/_/_/ /_/\\___/   /____/\\__/\\____/_/   \\___/ \r\n                                                         ";
 
+        //initializing of the 
         public Cart cart = new Cart();
         public Inventory inventory = new Inventory();
         public List<Order> orderHistory = new List<Order>();
 
         public void Start()
         {
+            //predefined products in the inventory
             Clothes jeans = new Clothes(1, "jeans", 10, "XL");
+            Clothes tshirt = new Clothes(2, "tshirt", 20, "L");
             inventory.AddProduct(jeans);
+            inventory.AddProduct(tshirt);
             MainMenu();
         }
         public void MainMenu()
@@ -390,6 +394,7 @@ namespace OnlineStore.Classes
             Console.WriteLine(logo, Color.BlueViolet);
 
             Order order = new Order();
+            order.GenerateOrderId();
             order.OrderInfo();
             Console.WriteLine("--Products--");
             cart.PrintItemsInCart();
@@ -407,7 +412,9 @@ namespace OnlineStore.Classes
                 Console.Clear();
                 Console.WriteLine(logo, Color.BlueViolet);
 
-                order.EnterPurchasedProducts(cart.cart);
+                List<Product> cartCopy = new List<Product>(cart.cart);
+
+                order.EnterPurchasedProducts(cartCopy);
 
                 order.PrintOrderDetail();
 
@@ -439,17 +446,17 @@ namespace OnlineStore.Classes
         }
         private void PrintOrderHistory()
         {
+            Console.Clear();
+            Console.WriteLine(logo, Color.BlueViolet);
+
             foreach (Order order in orderHistory)
-            {
-                Console.Clear();
-                Console.WriteLine(logo, Color.BlueViolet);
-
+            {               
                 order.PrintOrderDetail();
-
-                Console.Write("Pres Enter to return...");
-                Console.ReadKey();
-                MainMenu();
             }
+
+            Console.Write("Pres Enter to return...");
+            Console.ReadKey();
+            MainMenu();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace OnlineStore.Classes
 {
     internal class Order
     {
+
         public int orderId;
         public string customerName;
         public DateOnly date;
@@ -21,6 +22,13 @@ namespace OnlineStore.Classes
             Console.Write("Enter date:");
             this.date = DateOnly.Parse(Console.ReadLine());
         }
+        public void GenerateOrderId()
+        {
+            Random rnd = new Random();
+            int random = rnd.Next(100, 100000);
+
+            this.orderId = random;
+        }
 
         public void EnterPurchasedProducts(List<Product> cart)
         {
@@ -29,36 +37,31 @@ namespace OnlineStore.Classes
 
         public void PrintOrderDetail()
         {
-            Random rnd = new Random();
-            int random = rnd.Next(100, 100000);
-
-            this.orderId = random;
-
             Console.WriteLine("----------");
             Console.WriteLine($"Order ID: {this.orderId}");
             Console.WriteLine($"Name: {this.customerName}");
-            Console.WriteLine($"Date: {this.date}");          
+            Console.WriteLine($"Date: {this.date}");
+
+            Console.WriteLine("----------");
 
             foreach (Product product in purchased)
-            {
-                
-                Console.WriteLine("----------");
+            {                
 
                 if (product is Electronics)
                 {
                     Electronics electronics = (Electronics)product;
-                    Console.WriteLine($"ProductID: {electronics.productId}\nPrice: {electronics.price}\nSizeX: {electronics.sizeX}\n" +
+                    Console.WriteLine($"ProductID: {electronics.productId}\nName: {electronics.name}\nPrice: {electronics.price}\nSizeX: {electronics.sizeX}\n" +
                         $"SizeY: {electronics.sizeY}\nEnergy usage in Wats: {electronics.enegryUsage}");
                 }
                 else if (product is Clothes)
                 {
                     Clothes cloth = (Clothes)product;
-                    Console.WriteLine($"ProductID: {cloth.productId}\nPrice: {cloth.price}\nSize: {cloth.size}");
+                    Console.WriteLine($"ProductID: {cloth.productId}\nName: {cloth.name}\nPrice: {cloth.price}\nSize: {cloth.size}");
                 }
                 else if (product is Books)
                 {
                     Books book = (Books)product;
-                    Console.WriteLine($"ProductID: {book.productId}\nPrice: {book.price}\nPages: {book.pages}");
+                    Console.WriteLine($"ProductID: {book.productId}\nName: {book.name}\nPrice: {book.price}\nPages: {book.pages}");
                 }
 
                 Console.WriteLine("----------");

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
 
 namespace OnlineStore.Classes
 {
@@ -12,15 +14,14 @@ namespace OnlineStore.Classes
         public int orderId;
         public string customerName;
         public DateOnly date;
+        public int totalPrice;
         public List<Product> purchased;
 
-        public void OrderInfo()
+        public void OrderInfo(string customerName, DateOnly date)
         {
-            Console.Write("Enter your name: ");
-            this.customerName = Console.ReadLine();
+            this.customerName = customerName;
 
-            Console.Write("Enter date:");
-            this.date = DateOnly.Parse(Console.ReadLine());
+            this.date = date;
         }
         public void GenerateOrderId()
         {
@@ -41,6 +42,7 @@ namespace OnlineStore.Classes
             Console.WriteLine($"Order ID: {this.orderId}");
             Console.WriteLine($"Name: {this.customerName}");
             Console.WriteLine($"Date: {this.date}");
+            Console.WriteLine($"Total price: {this.totalPrice}");
 
             Console.WriteLine("----------");
 
@@ -66,7 +68,7 @@ namespace OnlineStore.Classes
 
                 Console.WriteLine("----------");
             }
-            Console.WriteLine("----------");
+            Console.WriteLine("=+=+=+=+=+", Color.BlueViolet);
         }
     }
 }

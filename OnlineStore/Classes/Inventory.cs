@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Console = Colorful.Console;
 
 namespace OnlineStore.Classes
 {
@@ -61,11 +63,22 @@ namespace OnlineStore.Classes
         {
             Console.Write("Search product: ");
             string searchedProduct = Console.ReadLine().ToLower();
+            if (searchedProduct == null || searchedProduct == "")
+            {
+                Console.WriteLine("The name must contain letter/s!", Color.IndianRed);
+                Console.WriteLine("Wait!", Color.Yellow);
+                Thread.Sleep(2000);
+                return;
+            }
+
+            bool flag = false;
 
             foreach (Product product in inventory)
             {
                 if (product.name == searchedProduct)
                 {
+                    flag = true;
+
                     Console.WriteLine("----------");
 
                     Console.WriteLine($"{searchedProduct} is avaliable!");
@@ -89,10 +102,12 @@ namespace OnlineStore.Classes
                     Console.WriteLine("----------");
                 }               
             }
+
+            if (!flag)
+            {
+                Console.WriteLine($"{searchedProduct} is not avaliable!");
+            }
             
-
-
-            Console.WriteLine($"{searchedProduct} is not avaliable!");
         }
         public void TotalValue()
         {

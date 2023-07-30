@@ -40,7 +40,20 @@ namespace OnlineStore.Classes
             Say("5", "Check out");
             Say("6", "Order history");
             Say("7", "Exit");
-            int choise = int.Parse(Console.ReadLine());
+
+            int choise;
+            bool isValidInput = int.TryParse(Console.ReadLine(), out choise);
+            if (!isValidInput || choise < 1 || choise > 7)
+            {
+                Console.Clear();
+                Console.WriteLine(logo, Color.BlueViolet);
+
+                Console.WriteLine("Invalid command! Please enter a valid option (1-7).", Color.IndianRed);
+                Console.Write("Wait!", Color.Yellow);
+                Thread.Sleep(2000);
+                MainMenu();
+                return;
+            }
 
             if (choise == 1)
             {
@@ -50,27 +63,31 @@ namespace OnlineStore.Classes
             {
                 int choiseReturn;
 
-                do 
-                { 
+                Console.Clear();
+                Console.WriteLine(logo, Color.BlueViolet);
+
+                Say("1", "Return to main menu");
+                inventory.PrintInventory();
+
+                bool isValidInputInternal = int.TryParse(Console.ReadLine(), out choiseReturn);
+                if (!isValidInputInternal || choiseReturn != 1)
+                {
                     Console.Clear();
                     Console.WriteLine(logo, Color.BlueViolet);
-                    Say("1", "Return to main menu");
-                    inventory.PrintInventory();
-                    choiseReturn = int.Parse(Console.ReadLine());
-                    if (choiseReturn == 1)
-                    { 
-                        MainMenu();
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine(logo, Color.BlueViolet);
 
-                        Console.WriteLine("Invalid command!", Color.IndianRed);
-                        Console.Write("Wait!", Color.Yellow);
-                        Thread.Sleep(2000);
-                    }
-                } while (choiseReturn != 1);
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
+
+
+                if (choiseReturn == 1)
+                { 
+                    MainMenu();
+                }
+                
             }
             else if (choise == 3)
             {
@@ -83,7 +100,20 @@ namespace OnlineStore.Classes
             }
             else if (choise == 5)
             {
-                OrderMenu();
+                if (cart.cart.Count != 0)
+                {
+                    OrderMenu();
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Your cart is empty!", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                }
             }
             else if (choise == 6)
             {
@@ -93,7 +123,7 @@ namespace OnlineStore.Classes
                     Console.Clear();
                     Console.WriteLine(logo, Color.BlueViolet);
 
-                    Console.WriteLine("Your cart is empty!", Color.IndianRed);
+                    Console.WriteLine("You dont have any orders yet!", Color.IndianRed);
                     Console.Write("Wait!", Color.Yellow);
                     Thread.Sleep(2000);
                     MainMenu();
@@ -108,16 +138,6 @@ namespace OnlineStore.Classes
             {
                 Environment.Exit(1);
             }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine(logo, Color.BlueViolet);
-
-                Console.WriteLine("Invalid command!", Color.IndianRed);
-                Console.Write("Wait!", Color.Yellow);
-                Thread.Sleep(2000);
-                MainMenu();
-            }
 
         }
         public void AddItemTypeMenu()
@@ -128,7 +148,20 @@ namespace OnlineStore.Classes
             Say("1", "Electronics");
             Say("2", "Clothes");
             Say("3", "Books");
-            int choiseType = int.Parse(Console.ReadLine());
+
+            int choiseType;
+            bool isValidInput = int.TryParse(Console.ReadLine(), out choiseType);
+            if (!isValidInput || choiseType < 1 || choiseType > 3)
+            {
+                Console.Clear();
+                Console.WriteLine(logo, Color.BlueViolet);
+
+                Console.WriteLine("Invalid command! Please enter a valid option (1-3).", Color.IndianRed);
+                Console.Write("Wait!", Color.Yellow);
+                Thread.Sleep(2000);
+                MainMenu();
+                return;
+            }
 
             AddItemMeny(choiseType);
         }
@@ -140,24 +173,91 @@ namespace OnlineStore.Classes
                 Console.WriteLine(logo, Color.BlueViolet);
 
                 Console.Write("Enter ProductId (int): ");
-                int productIdRaw = int.Parse(Console.ReadLine());
+                int productIdRaw;
+                bool isValidInput1 = int.TryParse(Console.ReadLine(), out productIdRaw);
+                if (!isValidInput1 || productIdRaw < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
 
                 Console.Write("Enter name of the product: ");
                 string nameRaw = Console.ReadLine();
-                
+                if (nameRaw == null || nameRaw == "")
+                {
+                    Console.WriteLine("The name must contain letter/s!", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                }
+
                 Console.Write("Enter product price: ");
-                int price = int.Parse(Console.ReadLine());
+                int priceRaw;
+                bool isValidInput2 = int.TryParse(Console.ReadLine(), out priceRaw);
+                if (!isValidInput2 || priceRaw < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
 
                 Console.Write("Enter SizeX (int): ");
-                int sizeXRaw = int.Parse(Console.ReadLine());
+                int sizeXRaw;
+                bool isValidInput3 = int.TryParse(Console.ReadLine(), out sizeXRaw);
+                if (!isValidInput3 || sizeXRaw < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
 
                 Console.Write("Enter SizeY (int): ");
-                int sizeYRaw = int.Parse(Console.ReadLine());
+                int sizeYRaw;
+                bool isValidInput4 = int.TryParse(Console.ReadLine(), out sizeYRaw);
+                if (!isValidInput4 || sizeYRaw < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
 
                 Console.Write("Enter Energy Usage (Wats): ");
-                int energyUsageRaw = int.Parse(Console.ReadLine());
+                int energyUsageRaw;
+                bool isValidInput5 = int.TryParse(Console.ReadLine(), out energyUsageRaw);
+                if (!isValidInput5 || energyUsageRaw < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
 
-                Electronics electronic = new Electronics(productIdRaw,nameRaw,price,sizeXRaw,sizeYRaw,energyUsageRaw);
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
+
+                Electronics electronic = new Electronics(productIdRaw,nameRaw,priceRaw,sizeXRaw,sizeYRaw,energyUsageRaw);
 
                 inventory.AddProduct(electronic);
 
@@ -176,16 +276,58 @@ namespace OnlineStore.Classes
                 Console.WriteLine(logo, Color.BlueViolet);
 
                 Console.Write("Enter ProductId (int): ");
-                int productIdRaw = int.Parse(Console.ReadLine());
+                int productIdRaw;
+                bool isValidInput1 = int.TryParse(Console.ReadLine(), out productIdRaw);
+                if (!isValidInput1 || productIdRaw < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
 
                 Console.Write("Enter name of the product: ");
                 string nameRaw = Console.ReadLine();
+                if (nameRaw == null || nameRaw == "")
+                {
+                    Console.WriteLine("The name must contain letter/s!", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                }
 
                 Console.Write("Enter product price: ");
-                int priceRaw = int.Parse(Console.ReadLine());
+                int priceRaw;
+                bool isValidInput2 = int.TryParse(Console.ReadLine(), out priceRaw);
+                if (!isValidInput2 || priceRaw < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
 
-                Console.Write("Enter size (string): ");
-                string sizeRaw = Console.ReadLine();
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
+
+                Console.Write("Enter size (XS/S/M/L/XL/XXL): ");
+                string sizeRaw = Console.ReadLine().ToUpper();
+                if (sizeRaw != "XS" && sizeRaw != "S" && sizeRaw != "M" && sizeRaw != "L" && sizeRaw != "XL" && sizeRaw != "XXL")
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("No such size!", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+
+                    MainMenu();
+                }
 
                 Clothes cloth = new Clothes(productIdRaw, nameRaw, priceRaw, sizeRaw);
 
@@ -205,16 +347,59 @@ namespace OnlineStore.Classes
                 Console.WriteLine(logo, Color.BlueViolet);
 
                 Console.Write("Enter ProductId (int): ");
-                int productIdRaw = int.Parse(Console.ReadLine());
+                int productIdRaw;
+                bool isValidInput1 = int.TryParse(Console.ReadLine(), out productIdRaw);
+                if (!isValidInput1 || productIdRaw < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
 
                 Console.Write("Enter name of the product: ");
                 string nameRaw = Console.ReadLine();
+                if (nameRaw == null || nameRaw == "")
+                {
+                    Console.WriteLine("The name must contain letter/s!", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                }
 
                 Console.Write("Enter product price: ");
-                int priceRaw = int.Parse(Console.ReadLine());
+                int priceRaw;
+                bool isValidInput2 = int.TryParse(Console.ReadLine(), out priceRaw);
+                if (!isValidInput2 || priceRaw < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
 
                 Console.Write("Enter number of pages (int): ");
-                int sizeRaw = int.Parse(Console.ReadLine());
+                int sizeRaw;
+                bool isValidInput3 = int.TryParse(Console.ReadLine(), out sizeRaw);
+                if (!isValidInput3 || sizeRaw < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
 
                 Books book = new Books(productIdRaw, nameRaw, priceRaw, sizeRaw);
 
@@ -228,16 +413,6 @@ namespace OnlineStore.Classes
                 MainMenu();
                 return;
             }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine(logo, Color.BlueViolet);
-
-                Console.WriteLine("Invalid command!", Color.IndianRed);
-                Console.Write("Wait!", Color.Yellow);
-                Thread.Sleep(2000);
-                MainMenu();
-            }
         }
         public void BrowsingMenu()
         {
@@ -249,8 +424,21 @@ namespace OnlineStore.Classes
             Say("3", "Main menu");
 
 
-            int choiseBrowsing = int.Parse(Console.ReadLine());
-            BrowsedMenu(choiseBrowsing);
+            int choise;
+            bool isValidInput = int.TryParse(Console.ReadLine(), out choise);
+            if (!isValidInput || choise < 1 || choise > 3)
+            {
+                Console.Clear();
+                Console.WriteLine(logo, Color.BlueViolet);
+
+                Console.WriteLine("Invalid command! Please enter a valid option (1-3).", Color.IndianRed);
+                Console.Write("Wait!", Color.Yellow);
+                Thread.Sleep(2000);
+                MainMenu();
+                return;
+            }
+
+            BrowsedMenu(choise);
         }
         public void BrowsedMenu(int choise)
         {
@@ -261,7 +449,20 @@ namespace OnlineStore.Classes
                 Console.WriteLine(logo, Color.BlueViolet);
 
                 Console.Write("Enter Product Id that you want to add to cart: ");
-                int id = int.Parse(Console.ReadLine());
+
+                int id;
+                bool isValidInput = int.TryParse(Console.ReadLine(), out id);
+                if (!isValidInput || id < 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
 
                 if (inventory.ReturnProductById(id) != null)
                 {
@@ -293,16 +494,6 @@ namespace OnlineStore.Classes
             {
                 MainMenu();
             }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine(logo, Color.BlueViolet);
-
-                Console.WriteLine("Invalid command!", Color.IndianRed);
-                Console.Write("Wait!", Color.Yellow);
-                Thread.Sleep(2000);
-                MainMenu();
-            }
         }
         public void CartMenu()
         {
@@ -314,11 +505,23 @@ namespace OnlineStore.Classes
             Say("3", "Main menu");
             
             cart.PrintItemsInCart();
-            Console.WriteLine("----------");
+            Console.WriteLine();
             Console.WriteLine($"Cart total price: {cart.TotalPriceOfCart()}");
             Console.WriteLine("----------");
 
-            int choise = int.Parse(Console.ReadLine());
+            int choise;
+            bool isValidInput = int.TryParse(Console.ReadLine(), out choise);
+            if (!isValidInput || choise < 1 || choise > 3)
+            {
+                Console.Clear();
+                Console.WriteLine(logo, Color.BlueViolet);
+
+                Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                Console.Write("Wait!", Color.Yellow);
+                Thread.Sleep(2000);
+                MainMenu();
+                return;
+            }
 
             if (choise == 1)
             {
@@ -329,26 +532,31 @@ namespace OnlineStore.Classes
                 Say("2", "Main menu");
 
                 cart.ExtendedPrintItemsInCart();
-                Console.WriteLine("----------");
+                Console.WriteLine();
                 Console.WriteLine($"Cart total price: {cart.TotalPriceOfCart()}");
                 Console.WriteLine("----------");
 
-                int choiseExtendedCart = int.Parse(Console.ReadLine());
+                int choiseInternal;
+                bool isValidInputInternal = int.TryParse(Console.ReadLine(), out choiseInternal);
+                if (!isValidInputInternal || choiseInternal < 1 || choiseInternal > 2)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
 
-                if (choiseExtendedCart == 1)
-                {
-                    CartMenu();
-                }
-                else if (choiseExtendedCart == 2)
-                {
-                    MainMenu();
-                }
-                else
-                {
-                    Console.WriteLine("Invalid command!", Color.IndianRed);
+                    Console.WriteLine("Invalid command! Please enter a valid option (1-2).", Color.IndianRed);
                     Console.Write("Wait!", Color.Yellow);
                     Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
+
+                if (choiseInternal == 1)
+                {
                     CartMenu();
+                }
+                else if (choiseInternal == 2)
+                {
+                    MainMenu();
                 }
             }
             else if (choise == 2)
@@ -357,7 +565,21 @@ namespace OnlineStore.Classes
                 Console.WriteLine(logo, Color.BlueViolet);
 
                 Console.Write("Remove product (product Id): ");
-                int productId = int.Parse(Console.ReadLine());
+                int productId;
+                bool isValidInputInternal = int.TryParse(Console.ReadLine(), out productId);
+                if (!isValidInputInternal || productId < 1 || productId > 7)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("Invalid command! Please enter a valid option.", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    MainMenu();
+                    return;
+                }
+
+                bool flag = false;
 
                 foreach (Product product in cart.cart)
                 {
@@ -367,24 +589,25 @@ namespace OnlineStore.Classes
                         Console.Write($"{product.name} successfully removed from the cart!", Color.LightGreen);
                         Thread.Sleep(2000);
                         CartMenu();
+                        flag = true;
                         break;
                     }
+                }
+                if (!flag)
+                {
+                    Console.Clear();
+                    Console.WriteLine(logo, Color.BlueViolet);
+
+                    Console.WriteLine("There is no such product!", Color.IndianRed);
+                    Console.Write("Wait!", Color.Yellow);
+                    Thread.Sleep(2000);
+                    CartMenu();
                 }
 
                 
             }
             else if (choise == 3)
             {
-                MainMenu();
-            }
-            else
-            {
-                Console.Clear();
-                Console.WriteLine(logo, Color.BlueViolet);
-
-                Console.WriteLine("Invalid command!", Color.IndianRed);
-                Console.Write("Wait!", Color.Yellow);
-                Thread.Sleep(2000);
                 MainMenu();
             }
         }
@@ -395,17 +618,58 @@ namespace OnlineStore.Classes
 
             Order order = new Order();
             order.GenerateOrderId();
-            order.OrderInfo();
+
+            Console.Write("Enter your name: ");
+            string customerName = Console.ReadLine();
+            if (customerName == null || customerName == "")
+            {
+                Console.WriteLine("The name must contain letter/s!", Color.IndianRed);
+                Console.Write("Wait!", Color.Yellow);
+                Thread.Sleep(2000);
+                MainMenu();
+            }
+
+            DateOnly date;
+
+            Console.Write("Enter date:");
+
+            bool dateBool = DateOnly.TryParse(Console.ReadLine(), out date);
+            if (!dateBool)
+            {
+                Console.Clear();
+                Console.WriteLine(logo, Color.BlueViolet);
+
+                Console.WriteLine("Invalid date!", Color.IndianRed);
+                Console.Write("Wait!", Color.Yellow);
+                Thread.Sleep(2000);
+                MainMenu();
+            }
+
+            order.OrderInfo(customerName, date);
+
+
             Console.WriteLine("--Products--");
             cart.PrintItemsInCart();
-            Console.WriteLine("----------");
+            Console.WriteLine();
             Console.WriteLine("Total price: " + cart.TotalPriceOfCart());
             Console.WriteLine("----------");
 
             Console.WriteLine("Do you want to finish your order:");
             Say("1", "Yes");
             Say("2", "No");
-            int choise = int.Parse(Console.ReadLine());
+            int choise;
+            bool isValidInput = int.TryParse(Console.ReadLine(), out choise);
+            if (!isValidInput || choise < 1 || choise > 2)
+            {
+                Console.Clear();
+                Console.WriteLine(logo, Color.BlueViolet);
+
+                Console.WriteLine("Invalid command! Please enter a valid option (1-2).", Color.IndianRed);
+                Console.Write("Wait!", Color.Yellow);
+                Thread.Sleep(2000);
+                MainMenu();
+                return;
+            }
 
             if (choise == 1)
             {
@@ -415,6 +679,8 @@ namespace OnlineStore.Classes
                 List<Product> cartCopy = new List<Product>(cart.cart);
 
                 order.EnterPurchasedProducts(cartCopy);
+
+                order.totalPrice = cart.TotalPriceOfCart();
 
                 order.PrintOrderDetail();
 
@@ -449,9 +715,15 @@ namespace OnlineStore.Classes
             Console.Clear();
             Console.WriteLine(logo, Color.BlueViolet);
 
+            int count = 1;
+
+            Console.WriteLine("=+=+=+=+=+", Color.BlueViolet);
+
             foreach (Order order in orderHistory)
-            {               
+            {
+                Console.WriteLine($"--Order: {count}--");
                 order.PrintOrderDetail();
+                count++;
             }
 
             Console.Write("Pres Enter to return...");
